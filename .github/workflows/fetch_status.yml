@@ -1,18 +1,6 @@
 name: 1. Fetch Light Status & Record Audit
 
 on:
-  schedule:
-    # --- Morning Shift Window (06:30 AM - 09:30 AM IST) ---
-    # 07:30 AM IST (02:00 UTC) - Morning Check 1 (Inside shift)
-    - cron: '0 2 * * *'
-    # 09:30 AM IST (04:00 UTC) - Morning Check 2 (After shift ends)
-    - cron: '0 4 * * *'
-    
-    # --- Evening Shift Window (05:30 PM - 08:30 PM IST) ---
-    # 06:30 PM IST (13:00 UTC) - Evening Check 3 (Inside shift)
-    - cron: '0 13 * * *'
-    # 08:30 PM IST (15:00 UTC) - Evening Check 4 (After shift ends)
-    - cron: '0 15 * * *'
   workflow_dispatch:
     inputs:
       time_slot:
@@ -52,16 +40,7 @@ jobs:
           elif [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -n "${{ github.event.client_payload.time_slot }}" ]; then
             echo "SLOT=${{ github.event.client_payload.time_slot }}" >> $GITHUB_ENV
           else
-            HOUR=$(date -u +%H)
-            if [ "$HOUR" -ge "01" ] && [ "$HOUR" -lt "03" ]; then
-              echo "SLOT=07:30" >> $GITHUB_ENV
-            elif [ "$HOUR" -ge "03" ] && [ "$HOUR" -lt "08" ]; then
-              echo "SLOT=09:30" >> $GITHUB_ENV
-            elif [ "$HOUR" -ge "12" ] && [ "$HOUR" -lt "14" ]; then
-              echo "SLOT=18:30" >> $GITHUB_ENV
-            else
-              echo "SLOT=20:30" >> $GITHUB_ENV
-            fi
+            echo "SLOT=07:30" >> $GITHUB_ENV
           fi
 
       - name: Execute ThingsBoard Status Fetch & Save Snapshot

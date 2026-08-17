@@ -1,9 +1,6 @@
 name: 2. Generate & Send Daily Email Report
 
 on:
-  schedule:
-    # 08:45 PM IST (15:15 UTC) - End of Day Consolidated Email Dispatch
-    - cron: '15 15 * * *'
   workflow_dispatch:
     inputs:
       target_date:

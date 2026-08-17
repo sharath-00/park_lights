@@ -19,6 +19,8 @@ on:
         description: 'Audit Time Slot (e.g. 07:30, 09:30, 18:30, 20:30)'
         required: false
         default: '07:30'
+  repository_dispatch:
+    types: [audit_trigger, fetch_status]
 
 permissions:
   contents: write
@@ -47,6 +49,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "SLOT=${{ github.event.inputs.time_slot }}" >> $GITHUB_ENV
+          elif [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -n "${{ github.event.client_payload.time_slot }}" ]; then
+            echo "SLOT=${{ github.event.client_payload.time_slot }}" >> $GITHUB_ENV
           else
             HOUR=$(date -u +%H)
             if [ "$HOUR" -ge "01" ] && [ "$HOUR" -lt "03" ]; then

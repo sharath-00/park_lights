@@ -10,6 +10,8 @@ on:
         description: 'Target Date YYYY-MM-DD (leave empty for today)'
         required: false
         default: ''
+  repository_dispatch:
+    types: [report_trigger, send_email]
 
 permissions:
   contents: write
@@ -44,7 +46,13 @@ jobs:
           RECIPIENT_EMAILS: ${{ secrets.RECIPIENT_EMAILS }}
           SAVE_LOCAL_HTML: "True"
         run: |
-          python send_report.py ${{ github.event.inputs.target_date }}
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            python send_report.py ${{ github.event.inputs.target_date }}
+          elif [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -n "${{ github.event.client_payload.target_date }}" ]; then
+            python send_report.py ${{ github.event.client_payload.target_date }}
+          else
+            python send_report.py today
+          fi
 
       - name: Commit & Push Generated Local Report Preview
         run: |

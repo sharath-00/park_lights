@@ -71,3 +71,11 @@ class AuditStorage:
         if not date_str:
             date_str = datetime.now().strftime("%Y-%m-%d")
         return self.data.get(date_str)
+
+    def clear_all_data(self):
+        """
+        Clears all recorded audit history from storage file.
+        """
+        self.data = {}
+        self.save()
+        logger.info(f"Audit storage at {self.storage_path} has been reset for a fresh day.")

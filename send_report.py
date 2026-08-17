@@ -117,6 +117,11 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
     else:
         logger.info("Email dispatch skipped or failed (check SMTP settings in .env file).")
     
+    reset_after_report = os.getenv("RESET_STORAGE_AFTER_REPORT", "True").lower() in ["true", "1", "yes"]
+    if reset_after_report:
+        storage.clear_all_data()
+        logger.info("Audit storage (data/audit_history.json) reset successfully for a fresh start tomorrow.")
+
     return sent
 
 if __name__ == "__main__":

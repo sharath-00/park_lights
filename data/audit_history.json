@@ -392,38 +392,38 @@
         "off_count": 37
       },
       "20:30": {
-        "timestamp": "2026-08-17T15:49:46.736672",
+        "timestamp": "2026-08-17T21:40:08.089173",
         "time_slot": "20:30",
         "lights": [
           {
             "uid": "SSC107SM03810",
-            "device_id": "18309d10-753d-11f1-981f-f16ee136eb5b",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
+            "device_id": "SSC107SM03810",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
-            "is_mock": false
+            "raw_value": "OFF",
+            "timestamp": 1786982481099,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM03274",
             "device_id": "1e71eff0-7211-11f1-934d-e50c5007eae6",
             "region": "EAST",
             "zone": "CVRamanNagar",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786981502000,
             "is_mock": false
           },
           {
             "uid": "SSC107SM03957",
-            "device_id": "1ea4df60-7549-11f1-981f-f16ee136eb5b",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
+            "device_id": "SSC107SM03957",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786890745038,
-            "is_mock": false
+            "raw_value": "OFF",
+            "timestamp": 1786982530921,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM03860",
@@ -438,31 +438,31 @@
           {
             "uid": "SSC107SM04223",
             "device_id": "20ab6fc0-7212-11f1-934d-e50c5007eae6",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
             "uid": "SSC107SM04278",
-            "device_id": "22866dc0-76a6-11f1-9f95-73515bb81f31",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
-            "is_mock": false
+            "device_id": "SSC107SM04278",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1786982600810,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM05108",
             "device_id": "2fd00de0-8a35-11f1-8188-97faf926d60a",
             "region": "EAST",
             "zone": "PulakeshiNagar",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786982402000,
             "is_mock": false
           },
           {
@@ -470,19 +470,19 @@
             "device_id": "401f02f0-76ad-11f1-9f95-73515bb81f31",
             "region": "EAST",
             "zone": "SarvagnaNagar",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786982402000,
             "is_mock": false
           },
           {
             "uid": "SSC107SM03960",
             "device_id": "4548f3a0-7548-11f1-981f-f16ee136eb5b",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
+            "region": "Bangalore (BBMP)",
+            "zone": "BBMP Park Light Controllers",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982415012,
             "is_mock": false
           },
           {
@@ -492,18 +492,18 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
             "uid": "SSC107SM05037",
-            "device_id": "631d5b60-8a6e-11f1-8188-97faf926d60a",
-            "region": "EAST",
-            "zone": "PulakeshiNagar",
+            "device_id": "SSC107SM05037",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
-            "is_mock": false
+            "raw_value": "OFF",
+            "timestamp": 1786982680226,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM05145",
@@ -512,7 +512,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786962602000,
             "is_mock": false
           },
           {
@@ -522,7 +522,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -532,7 +532,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786962602000,
             "is_mock": false
           },
           {
@@ -542,47 +542,47 @@
             "zone": "CVRamanNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
             "uid": "SSC107SM04108",
-            "device_id": "ad2407e0-754c-11f1-981f-f16ee136eb5b",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786896902000,
-            "is_mock": false
+            "device_id": "SSC107SM04108",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1786982742757,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM05053",
-            "device_id": "b2500b40-8a6b-11f1-8188-97faf926d60a",
-            "region": "EAST",
-            "zone": "Hebbal",
+            "device_id": "SSC107SM05053",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
-            "is_mock": false
+            "raw_value": "OFF",
+            "timestamp": 1786982772656,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM03859",
             "device_id": "b7937280-769e-11f1-9f95-73515bb81f31",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
+            "region": "Bangalore (BBMP)",
+            "zone": "BBMP Park Light Controllers",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
             "uid": "SSC107SM05050",
             "device_id": "ba9693d0-8a3b-11f1-8188-97faf926d60a",
-            "region": "EAST",
-            "zone": "Hebbal",
+            "region": "Bangalore (BBMP)",
+            "zone": "BBMP Park Light Controllers",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -592,7 +592,7 @@
             "zone": "PulakeshiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -602,7 +602,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -612,7 +612,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961710000,
+            "timestamp": 1786962602000,
             "is_mock": false
           },
           {
@@ -622,18 +622,18 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
             "uid": "SSC107SM03250",
-            "device_id": "f24bebd0-7209-11f1-934d-e50c5007eae6",
-            "region": "EAST",
-            "zone": "CVRamanNagar",
+            "device_id": "SSC107SM03250",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
-            "is_mock": false
+            "raw_value": "OFF",
+            "timestamp": 1786982892689,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM02850",
@@ -642,7 +642,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -652,7 +652,7 @@
             "zone": "ShanthiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786977716038,
             "is_mock": false
           },
           {
@@ -662,27 +662,27 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
             "uid": "SSC107SM04749",
-            "device_id": "64684320-753f-11f1-981f-f16ee136eb5b",
-            "region": "EAST",
-            "zone": "SarvagnaNagar",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
-            "is_mock": false
+            "device_id": "SSC107SM04749",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1786982930507,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM03571",
             "device_id": "7236b981-736b-11f1-934d-e50c5007eae6",
             "region": "EAST",
             "zone": "CVRamanNagar",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786982402000,
             "is_mock": false
           },
           {
@@ -702,7 +702,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961711000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -712,7 +712,7 @@
             "zone": "ShanthiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786961702000,
+            "timestamp": 1786982407037,
             "is_mock": false
           },
           {
@@ -730,9 +730,9 @@
             "device_id": "32c0b110-76a0-11f1-9f95-73515bb81f31",
             "region": "Bommanahali",
             "zone": "Bommanahali-Z1",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786982402000,
             "is_mock": false
           },
           {
@@ -740,29 +740,29 @@
             "device_id": "2aeeaea0-7543-11f1-981f-f16ee136eb5b",
             "region": "Bommanahali",
             "zone": "Bommanahali-Z1",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786981502000,
             "is_mock": false
           },
           {
             "uid": "SSC107SM03777",
-            "device_id": "1da40a80-76a4-11f1-9f95-73515bb81f31",
-            "region": "Bommanahali",
-            "zone": "Bommanahali-Z1",
+            "device_id": "SSC107SM03777",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
             "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1783591020038,
-            "is_mock": false
+            "raw_value": "OFF",
+            "timestamp": 1786982999289,
+            "is_mock": true
           },
           {
             "uid": "SSC107SM03990",
             "device_id": "2aedc440-7543-11f1-981f-f16ee136eb5b",
             "region": "Bommanahali",
             "zone": "Bommanahali-Z1",
-            "relay_status": "OFF",
-            "raw_value": "0",
-            "timestamp": 1786961702000,
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1786982402000,
             "is_mock": false
           },
           {
@@ -777,8 +777,8 @@
           }
         ],
         "total_lights": 38,
-        "burning_count": 1,
-        "off_count": 37
+        "burning_count": 11,
+        "off_count": 27
       },
       "18:30": {
         "timestamp": "2026-08-17T18:32:14.075120",

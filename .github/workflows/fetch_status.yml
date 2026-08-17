@@ -6,7 +6,7 @@ on:
       time_slot:
         description: 'Audit Time Slot (e.g. 07:30, 09:30, 18:30, 20:30)'
         required: false
-        default: '07:30'
+        default: ''
   repository_dispatch:
     types: [audit_trigger, fetch_status]
 
@@ -35,12 +35,21 @@ jobs:
       - name: Determine Time Slot
         id: slot
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ github.event.inputs.time_slot }}" ]; then
             echo "SLOT=${{ github.event.inputs.time_slot }}" >> $GITHUB_ENV
           elif [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -n "${{ github.event.client_payload.time_slot }}" ]; then
             echo "SLOT=${{ github.event.client_payload.time_slot }}" >> $GITHUB_ENV
           else
-            echo "SLOT=07:30" >> $GITHUB_ENV
+            HOUR=$(date -u +%H)
+            if [ "$HOUR" -ge "01" ] && [ "$HOUR" -lt "03" ]; then
+              echo "SLOT=07:30" >> $GITHUB_ENV
+            elif [ "$HOUR" -ge "03" ] && [ "$HOUR" -lt "08" ]; then
+              echo "SLOT=09:30" >> $GITHUB_ENV
+            elif [ "$HOUR" -ge "12" ] && [ "$HOUR" -lt "14" ]; then
+              echo "SLOT=18:30" >> $GITHUB_ENV
+            else
+              echo "SLOT=20:30" >> $GITHUB_ENV
+            fi
           fi
 
       - name: Execute ThingsBoard Status Fetch & Save Snapshot

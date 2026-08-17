@@ -41,6 +41,13 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
     recipients = [r.strip() for r in recipients_raw.split(",") if r.strip()]
     save_local = os.getenv("SAVE_LOCAL_HTML", "True").lower() in ["true", "1", "yes"]
 
+    if not smtp_user or not smtp_pass or not recipients:
+        logger.error("❌ CRITICAL: MISSING SMTP CREDENTIALS OR RECIPIENT EMAILS IN ENVIRONMENT!")
+        logger.error(f"  -> SMTP_USERNAME present: {bool(smtp_user)}")
+        logger.error(f"  -> SMTP_PASSWORD present: {bool(smtp_pass)}")
+        logger.error(f"  -> RECIPIENT_EMAILS present: {bool(recipients)}")
+        logger.error("👉 Please add SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, SENDER_EMAIL, and RECIPIENT_EMAILS to GitHub Repository Secrets at: https://github.com/sharath-00/park_lights/settings/secrets/actions")
+
     storage = AuditStorage()
     daily_summary = storage.get_daily_summary(date_str)
 

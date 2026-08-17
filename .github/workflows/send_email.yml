@@ -44,13 +44,9 @@ jobs:
           RECIPIENT_EMAILS: ${{ secrets.RECIPIENT_EMAILS }}
           SAVE_LOCAL_HTML: "True"
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            python send_report.py ${{ github.event.inputs.target_date }}
-          elif [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -n "${{ github.event.client_payload.target_date }}" ]; then
-            python send_report.py ${{ github.event.client_payload.target_date }}
-          else
-            python send_report.py today
-          fi
+          SLOT_DATE="${{ github.event.inputs.target_date || github.event.client_payload.target_date || 'today' }}"
+          if [ -z "$SLOT_DATE" ]; then SLOT_DATE="today"; fi
+          python send_report.py "$SLOT_DATE"
 
       - name: Commit & Push Generated Local Report Preview
         run: |

@@ -392,7 +392,7 @@
         "off_count": 37
       },
       "20:30": {
-        "timestamp": "2026-08-17T10:02:27.930211",
+        "timestamp": "2026-08-17T15:49:46.736672",
         "time_slot": "20:30",
         "lights": [
           {
@@ -402,7 +402,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -412,7 +412,7 @@
             "zone": "CVRamanNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -442,7 +442,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -452,7 +452,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -462,7 +462,7 @@
             "zone": "PulakeshiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -472,7 +472,7 @@
             "zone": "SarvagnaNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -482,7 +482,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -492,7 +492,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -502,7 +502,7 @@
             "zone": "PulakeshiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -512,7 +512,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -522,7 +522,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -532,7 +532,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -542,7 +542,7 @@
             "zone": "CVRamanNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -562,7 +562,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -572,7 +572,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -582,7 +582,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -592,7 +592,7 @@
             "zone": "PulakeshiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -602,7 +602,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -612,7 +612,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961710000,
             "is_mock": false
           },
           {
@@ -622,7 +622,7 @@
             "zone": "Hebbal",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -632,7 +632,7 @@
             "zone": "CVRamanNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -642,7 +642,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -652,7 +652,7 @@
             "zone": "ShanthiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -662,7 +662,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -672,7 +672,7 @@
             "zone": "SarvagnaNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -682,7 +682,7 @@
             "zone": "CVRamanNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -702,7 +702,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961711000,
             "is_mock": false
           },
           {
@@ -712,7 +712,7 @@
             "zone": "ShanthiNagar",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -732,7 +732,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -742,7 +742,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {
@@ -762,7 +762,7 @@
             "zone": "Bommanahali-Z1",
             "relay_status": "OFF",
             "raw_value": "0",
-            "timestamp": 1786960802000,
+            "timestamp": 1786961702000,
             "is_mock": false
           },
           {

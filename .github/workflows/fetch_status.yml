@@ -54,6 +54,7 @@ jobs:
 
       - name: Execute ThingsBoard Status Fetch & Save Snapshot
         env:
+          TZ: "Asia/Kolkata"
           THINGSBOARD_HOST: ${{ secrets.THINGSBOARD_HOST }}
           THINGSBOARD_USERNAME: ${{ secrets.THINGSBOARD_USERNAME }}
           THINGSBOARD_PASSWORD: ${{ secrets.THINGSBOARD_PASSWORD }}

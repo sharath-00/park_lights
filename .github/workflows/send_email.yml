@@ -34,6 +34,7 @@ jobs:
 
       - name: Dispatch Email Audit Report
         env:
+          TZ: "Asia/Kolkata"
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USE_TLS: ${{ secrets.SMTP_USE_TLS }}

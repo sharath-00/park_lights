@@ -52,6 +52,14 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
     daily_summary = storage.get_daily_summary(date_str)
 
     if not daily_summary or not daily_summary.get("audits"):
+        all_dates = sorted(list(storage.data.keys()))
+        if all_dates:
+            latest_date = all_dates[-1]
+            logger.info(f"No audit records found for date '{date_str}'. Falling back to latest recorded date in storage: '{latest_date}'.")
+            date_str = latest_date
+            daily_summary = storage.get_daily_summary(date_str)
+
+    if not daily_summary or not daily_summary.get("audits"):
         logger.warning(f"No audit records found in storage for date {date_str}. Aborting report generation.")
         return False
 
@@ -115,7 +123,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="BBMP Park Light Daily Email Report Dispatcher")
-    parser.add_argument("date", nargs="?", default="yesterday", help="Target date YYYY-MM-DD, 'yesterday', or 'today' (default: yesterday)")
+    parser.add_argument("date", nargs="?", default="today", help="Target date YYYY-MM-DD, 'yesterday', or 'today' (default: today)")
     parser.add_argument("--date", "-d", dest="flag_date", help="Target date YYYY-MM-DD, 'yesterday', or 'today'")
     parser.add_argument("--uids", "-u", help="Comma-separated list of target light UIDs (e.g. SSC107SM04668,SSC107SM03799)")
 

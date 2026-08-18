@@ -66,11 +66,22 @@ class AuditStorage:
 
     def get_daily_summary(self, date_str: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """
-        Retrieve daily audit summary containing all time slot audits for a given date.
+        Retrieve daily audit summary containing all time slot audits stored in self.data.
+        Merges audits across dates if the audit cycle spans overnight (e.g. Evening to Next Morning).
         """
-        if not date_str:
-            date_str = datetime.now().strftime("%Y-%m-%d")
-        return self.data.get(date_str)
+        if not self.data:
+            return None
+
+        merged_audits = {}
+        for d_key, d_val in self.data.items():
+            if isinstance(d_val, dict) and "audits" in d_val:
+                merged_audits.update(d_val["audits"])
+
+        target_date = date_str or datetime.now().strftime("%Y-%m-%d")
+        return {
+            "date": target_date,
+            "audits": merged_audits
+        }
 
     def clear_all_data(self):
         """

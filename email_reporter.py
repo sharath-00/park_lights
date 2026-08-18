@@ -204,7 +204,7 @@ class EmailReporter:
                         BBMP Smart City Energy Management
                     </div>
                     <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff;">
-                        🌳 Daily 4-Run Park Lights Shift Audit Report
+                      Daily Park Lights Monitoring Report
                     </h1>
                     <div style="margin-top: 8px; font-size: 13px; color: #94a3b8;">
                         Report Time: {now_str} | Morning Shift (06:30-09:30 AM) & Evening Shift (05:30-08:30 PM)
@@ -251,10 +251,10 @@ class EmailReporter:
                                 <th style="padding: 10px 12px;">Region</th>
                                 <th style="padding: 10px 12px;">Zone</th>
                                 <th style="padding: 10px 10px; text-align: center;">Audit Time</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 1<br>(07:30 - Inside)</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 2<br>(09:30 - Outside)</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 3<br>(18:30 - Inside)</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 4<br>(20:30 - Outside)</th>
+                                <th style="padding: 10px 10px; text-align: center;">Run 1<br>(18:30 - Evening Inside)</th>
+                                <th style="padding: 10px 10px; text-align: center;">Run 2<br>(20:30 - Evening Outside)</th>
+                                <th style="padding: 10px 10px; text-align: center;">Run 3<br>(07:30 - Morning Inside)</th>
+                                <th style="padding: 10px 10px; text-align: center;">Run 4<br>(09:30 - Morning Outside)</th>
                                 <th style="padding: 10px 12px; text-align: center;">Overall Status</th>
                             </tr>
                         </thead>
@@ -266,8 +266,8 @@ class EmailReporter:
                     <!-- Legend / Explanation Box -->
                     <div style="margin-top: 24px; background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 14px; border-radius: 8px; font-size: 12px; color: #475569;">
                         <strong>Shift Compliance Logic Criteria:</strong><br>
-                        • <strong>Inside Timeslots (Run 1 @ 07:30 & Run 3 @ 18:30):</strong> Relay expected <strong>ON</strong>.<br>
-                        • <strong>Outside Timeslots (Run 2 @ 09:30 & Run 4 @ 20:30):</strong> Relay expected <strong>OFF</strong>.<br>
+                        • <strong>Inside Timeslots (Run 1 @ 18:30 & Run 3 @ 07:30):</strong> Relay expected <strong>ON</strong>.<br>
+                        • <strong>Outside Timeslots (Run 2 @ 20:30 & Run 4 @ 09:30):</strong> Relay expected <strong>OFF</strong>.<br>
                         • <strong>Overall Status:</strong> Marked <span style="color: #15803d; font-weight: 700;">✅ Good & Efficiently Operative</span> if all shift criteria pass, else <span style="color: #dc2626; font-weight: 700;">❌ Not Successful</span>.
                     </div>
 

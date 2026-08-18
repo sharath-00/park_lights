@@ -121,6 +121,11 @@ def run_audit(time_slot: str = "MANUAL_CHECK", send_mail: Optional[bool] = None,
             logger.info(f"Automated email report sent to {recipients}.")
         else:
             logger.info("Email dispatch skipped or failed (check SMTP settings in .env file).")
+
+        reset_after_report = os.getenv("RESET_STORAGE_AFTER_REPORT", "True").lower() in ["true", "1", "yes"]
+        if reset_after_report:
+            storage.clear_all_data()
+            logger.info("Audit storage (data/audit_history.json) reset successfully for the next audit cycle.")
     else:
         logger.info("Email dispatch skipped for this run (will be dispatched on the last run of the day).")
 

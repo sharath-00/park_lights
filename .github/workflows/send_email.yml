@@ -42,15 +42,15 @@ jobs:
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           RECIPIENT_EMAILS: ${{ secrets.RECIPIENT_EMAILS }}
-          SAVE_LOCAL_HTML: "True"
+          SAVE_LOCAL_HTML: "False"
         run: |
           SLOT_DATE="${{ github.event.inputs.target_date || github.event.client_payload.target_date || 'today' }}"
           if [ -z "$SLOT_DATE" ]; then SLOT_DATE="today"; fi
           python send_report.py "$SLOT_DATE"
 
-      - name: Commit & Push Generated Local Report Preview & Reset Data
+      - name: Commit & Push Updated Storage
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/audit_history.json logs/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Save daily email report preview & reset audit history [skip ci]" && git push)
+          git add data/audit_history.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update storage after email dispatch [skip ci]" && git push)

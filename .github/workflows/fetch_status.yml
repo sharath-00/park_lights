@@ -40,16 +40,8 @@ jobs:
           elif [ "${{ github.event_name }}" = "repository_dispatch" ] && [ -n "${{ github.event.client_payload.time_slot }}" ]; then
             echo "SLOT=${{ github.event.client_payload.time_slot }}" >> $GITHUB_ENV
           else
-            HOUR=$(date -u +%H)
-            if [ "$HOUR" -ge "01" ] && [ "$HOUR" -lt "03" ]; then
-              echo "SLOT=07:30" >> $GITHUB_ENV
-            elif [ "$HOUR" -ge "03" ] && [ "$HOUR" -lt "08" ]; then
-              echo "SLOT=09:30" >> $GITHUB_ENV
-            elif [ "$HOUR" -ge "12" ] && [ "$HOUR" -lt "14" ]; then
-              echo "SLOT=18:30" >> $GITHUB_ENV
-            else
-              echo "SLOT=20:30" >> $GITHUB_ENV
-            fi
+            CURRENT_SLOT=$(TZ="Asia/Kolkata" date +%H:%M)
+            echo "SLOT=$CURRENT_SLOT" >> $GITHUB_ENV
           fi
 
       - name: Execute ThingsBoard Status Fetch & Save Snapshot
@@ -60,7 +52,7 @@ jobs:
           THINGSBOARD_PASSWORD: ${{ secrets.THINGSBOARD_PASSWORD }}
           LIGHT_UIDS: ${{ secrets.LIGHT_UIDS }}
           TELEMETRY_RELAY_KEY: ${{ secrets.TELEMETRY_RELAY_KEY }}
-          SAVE_LOCAL_HTML: "True"
+          SAVE_LOCAL_HTML: "False"
         run: |
           python test_audit.py $SLOT --no-email
 
@@ -68,5 +60,5 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/audit_history.json logs/
+          git add data/audit_history.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Record audit snapshot for $SLOT [skip ci]" && git push)

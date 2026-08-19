@@ -15,7 +15,28 @@ logging.basicConfig(
 )
 logger = logging.getLogger("TestAuditRunner")
 
-def run_audit(time_slot: str = "MANUAL_CHECK", send_mail: Optional[bool] = None, custom_uids: Optional[List[str]] = None):
+def normalize_time_slot(slot_str: str) -> str:
+    """
+    Normalizes time slot identifier. If not specified or MANUAL_CHECK/AUTO, formats current execution time (HH:MM).
+    If execution time is within 20 minutes of standard shift timings (18:30, 20:30, 07:30, 09:30), aligns to standard slot.
+    """
+    if not slot_str or slot_str in ["AUTO", "MANUAL_CHECK"]:
+        slot_str = datetime.now().strftime("%H:%M")
+
+    standard_slots = ["18:30", "20:30", "07:30", "09:30"]
+    try:
+        parts = slot_str.split(":")
+        run_minutes = int(parts[0]) * 60 + int(parts[1])
+        for std in standard_slots:
+            sp = std.split(":")
+            std_minutes = int(sp[0]) * 60 + int(sp[1])
+            if abs(run_minutes - std_minutes) <= 20:
+                return std
+    except Exception:
+        pass
+    return slot_str
+
+def run_audit(time_slot: str = "AUTO", send_mail: Optional[bool] = None, custom_uids: Optional[List[str]] = None):
     """
     Executes a single audit check:
     1. Loads configuration from .env
@@ -23,6 +44,7 @@ def run_audit(time_slot: str = "MANUAL_CHECK", send_mail: Optional[bool] = None,
     3. Persists audit snapshot in storage (on EVERY execution)
     4. Evaluates execution count: sends email on the LAST run of the day (e.g. 4th execution)
     """
+    time_slot = normalize_time_slot(time_slot)
     # Load .env
     env_path = os.path.join(os.path.dirname(__file__), ".env")
     if not os.path.exists(env_path):
@@ -53,7 +75,7 @@ def run_audit(time_slot: str = "MANUAL_CHECK", send_mail: Optional[bool] = None,
     recipients_raw = os.getenv("RECIPIENT_EMAILS", "")
     recipients = [r.strip() for r in recipients_raw.split(",") if r.strip()]
 
-    save_local = os.getenv("SAVE_LOCAL_HTML", "True").lower() in ["true", "1", "yes"]
+    save_local = os.getenv("SAVE_LOCAL_HTML", "False").lower() in ["true", "1", "yes"]
 
     logger.info("==========================================================")
     logger.info(f"STARTING PARK LIGHT RELAY AUDIT [{time_slot}]")
@@ -77,9 +99,14 @@ def run_audit(time_slot: str = "MANUAL_CHECK", send_mail: Optional[bool] = None,
     audit_count = len(audits_today)
 
     # Auto-determine send_mail if not explicitly passed
-    if send_mail is None:
+    has_mock_data = any(l.get("is_mock", False) for l in light_results) or not tb_client.token
+    if has_mock_data:
+        logger.warning("❌ ThingsBoard server is unavailable or returned mock fallback data. Skipping email report dispatch as requested.")
+        should_send_mail = False
+    elif send_mail is None:
+        is_configured_slot = bool(configured_slots and time_slot in configured_slots)
         is_last_configured_slot = bool(configured_slots and time_slot == configured_slots[-1])
-        should_send_mail = (audit_count >= expected_daily_runs) or is_last_configured_slot
+        should_send_mail = is_configured_slot and ((audit_count >= expected_daily_runs) or is_last_configured_slot)
         logger.info(f"Daily audit execution count for today ({datetime.now().strftime('%Y-%m-%d')}): {audit_count} of {expected_daily_runs} target runs.")
         if not should_send_mail:
             logger.info(f"Data recorded for slot [{time_slot}] (Run #{audit_count}). Email report deferred until the final run (#{expected_daily_runs}).")
@@ -119,13 +146,12 @@ def run_audit(time_slot: str = "MANUAL_CHECK", send_mail: Optional[bool] = None,
         sent = reporter.send_email(subject, html_content)
         if sent:
             logger.info(f"Automated email report sent to {recipients}.")
+            reset_after_report = os.getenv("RESET_STORAGE_AFTER_REPORT", "True").lower() in ["true", "1", "yes"]
+            if reset_after_report:
+                storage.clear_all_data()
+                logger.info("Audit storage (data/audit_history.json) reset successfully for the next audit cycle.")
         else:
-            logger.info("Email dispatch skipped or failed (check SMTP settings in .env file).")
-
-        reset_after_report = os.getenv("RESET_STORAGE_AFTER_REPORT", "True").lower() in ["true", "1", "yes"]
-        if reset_after_report:
-            storage.clear_all_data()
-            logger.info("Audit storage (data/audit_history.json) reset successfully for the next audit cycle.")
+            logger.warning("Email dispatch skipped or failed (check SMTP settings in .env file). Retaining audit history in data/audit_history.json.")
     else:
         logger.info("Email dispatch skipped for this run (will be dispatched on the last run of the day).")
 

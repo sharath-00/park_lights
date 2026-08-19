@@ -26,6 +26,18 @@ class EmailReporter:
         self.sender_email = sender_email
         self.recipient_emails = recipient_emails
         self.use_tls = use_tls
+    def _get_expected_status_for_run(self, run_index: int) -> str:
+        """
+        Determines expected relay status based on run sequence:
+        - 1st run: ON
+        - 2nd run: OFF
+        - 3rd run: ON
+        - 4th run: OFF
+        """
+        return "ON" if run_index % 2 != 0 else "OFF"
+
+    def _get_expected_status_for_slot(self, slot_name: str) -> str:
+        return "ON"
 
     def build_html_dashboard(self, current_time_slot: str, current_audit: Dict[str, Any],
                              daily_summary: Optional[Dict[str, Any]] = None) -> str:
@@ -42,8 +54,14 @@ class EmailReporter:
 
         audits = daily_summary.get("audits", {}) if daily_summary else {}
         
-        # Standard time slots
-        slot_keys = ["07:30", "09:30", "18:30", "20:30"]
+        # Dynamically collect recorded time slots in chronological order
+        recorded_slots = list(audits.keys())
+        recorded_slots.sort(key=lambda sk: audits.get(sk, {}).get("timestamp", ""))
+
+        if not recorded_slots:
+            slot_keys = ["18:30", "20:30", "07:30", "09:30"]
+        else:
+            slot_keys = recorded_slots
 
         # Map each slot to its light status dict, region, and zone info
         slot_status_maps = {}
@@ -51,9 +69,8 @@ class EmailReporter:
         slot_zone_maps = {}
         slot_ts_maps = {}
 
-        # Populate maps across all available slots in audits
-        all_audit_slots = set(slot_keys).union(set(audits.keys()))
-        for sk in all_audit_slots:
+        # Populate maps across all recorded slots
+        for sk in slot_keys:
             slot_data = audits.get(sk, {})
             lights_list = slot_data.get("lights", [])
             if lights_list:
@@ -90,39 +107,33 @@ class EmailReporter:
 
         table_rows_html = ""
 
-        # Rules:
-        # 07:30 (Run 1 - Inside Morning): Expected ON
-        # 09:30 (Run 2 - Outside Morning): Expected OFF
-        # 18:30 (Run 3 - Inside Evening): Expected ON
-        # 20:30 (Run 4 - Outside Evening): Expected OFF
-        run_rules = {
-            "07:30": {"expected": "ON", "name": "Run 1 (07:30 - Inside)"},
-            "09:30": {"expected": "OFF", "name": "Run 2 (09:30 - Outside)"},
-            "18:30": {"expected": "ON", "name": "Run 3 (18:30 - Inside)"},
-            "20:30": {"expected": "OFF", "name": "Run 4 (20:30 - Outside)"}
-        }
+        # Dynamic expected rules & dynamic header columns based on run index
+        run_rules = {}
+        header_cols_html = ""
+        for idx, sk in enumerate(slot_keys, start=1):
+            exp_st = self._get_expected_status_for_run(idx)
+            run_rules[sk] = {"expected": exp_st, "name": f"Run {idx} ({sk})"}
+            header_cols_html += f'<th style="padding: 10px 10px; text-align: center;">Run {idx}<br>({sk})</th>'
 
         for index, uid in enumerate(light_uids, start=1):
             # Region and Zone resolution across all recorded slots & current audit
             region_name = None
             zone_name = None
             for sk in slot_status_maps.keys():
-                if not region_name and uid in slot_region_maps.get(sk, {}):
-                    region_name = slot_region_maps[sk][uid]
-                if not zone_name and uid in slot_zone_maps.get(sk, {}):
-                    zone_name = slot_zone_maps[sk][uid]
+                cand_reg = slot_region_maps.get(sk, {}).get(uid)
+                cand_zone = slot_zone_maps.get(sk, {}).get(uid)
+                if cand_reg and cand_reg != default_region:
+                    region_name = cand_reg
+                elif not region_name and cand_reg:
+                    region_name = cand_reg
+
+                if cand_zone and cand_zone != default_zone:
+                    zone_name = cand_zone
+                elif not zone_name and cand_zone:
+                    zone_name = cand_zone
 
             region_name = region_name or default_region
             zone_name = zone_name or default_zone
-
-            # Formatted latest timestamp
-            last_ts_str = now_str
-            for sk in reversed(slot_keys):
-                if uid in slot_ts_maps.get(sk, {}) and slot_ts_maps[sk][uid]:
-                    ts_val = slot_ts_maps[sk][uid]
-                    if isinstance(ts_val, (int, float)):
-                        last_ts_str = datetime.fromtimestamp(ts_val / 1000.0).strftime("%I:%M %p")
-                    break
 
             evaluations = []
             run_cells_html = ""
@@ -133,6 +144,9 @@ class EmailReporter:
 
                 if st == "N/A":
                     cell_badge = '<span style="color: #94a3b8; font-size: 12px;">-</span>'
+                elif st == "UNKNOWN":
+                    evaluations.append(False)
+                    cell_badge = '<span style="color: #ea580c; font-weight: 700; font-size: 12px;">UNKNOWN (Offline)</span>'
                 elif st == expected_st:
                     evaluations.append(True)
                     cell_badge = f'<span style="color: #16a34a; font-weight: 600; font-size: 12px;">{st} (Expected)</span>'
@@ -157,7 +171,6 @@ class EmailReporter:
                 <td style="padding: 12px 12px; font-weight: 700; color: #0f172a; font-size: 13px;">{uid}</td>
                 <td style="padding: 12px 12px; color: #475569; font-size: 12px;">{region_name}</td>
                 <td style="padding: 12px 12px; color: #475569; font-size: 12px;">{zone_name}</td>
-                <td style="padding: 12px 10px; text-align: center; color: #64748b; font-size: 12px;">{last_ts_str}</td>
                 {run_cells_html}
                 <td style="padding: 12px 12px; text-align: center;">{overall_status_badge}</td>
             </tr>
@@ -171,7 +184,7 @@ class EmailReporter:
             <div style="background-color: #fef2f2; border-left: 4px solid #ef4444; padding: 16px; margin-bottom: 24px; border-radius: 6px;">
                 <h3 style="margin: 0; color: #991b1b; font-size: 16px;">⚠️ Shift Compliance Alert: {unsuccessful_count} Light(s) Not Successful</h3>
                 <p style="margin: 8px 0 0 0; color: #7f1d1d; font-size: 14px; line-height: 1.5;">
-                    One or more lights failed shift compliance conditions (Must be <strong>ON inside timeslots</strong> and <strong>OFF outside timeslots</strong>).
+                    One or more lights failed shift compliance conditions (Run 1: <strong>ON</strong>, Run 2: <strong>OFF</strong>, Run 3: <strong>ON</strong>, Run 4: <strong>OFF</strong>).
                     Please inspect relay controls for non-compliant UIDs.
                 </p>
             </div>
@@ -181,7 +194,7 @@ class EmailReporter:
             <div style="background-color: #f0fdf4; border-left: 4px solid #22c55e; padding: 16px; margin-bottom: 24px; border-radius: 6px;">
                 <h3 style="margin: 0; color: #166534; font-size: 16px;">✅ 100% Good & Efficiently Operative</h3>
                 <p style="margin: 8px 0 0 0; color: #14532d; font-size: 14px;">
-                    All monitored park lights passed all 4 daily shift compliance checks (ON inside shift hours, OFF outside shift hours).
+                    All monitored park lights passed all daily shift compliance checks.
                 </p>
             </div>
             """
@@ -207,7 +220,7 @@ class EmailReporter:
                       Daily Park Lights Monitoring Report
                     </h1>
                     <div style="margin-top: 8px; font-size: 13px; color: #94a3b8;">
-                        Report Time: {now_str} | Morning Shift (06:30-09:30 AM) & Evening Shift (05:30-08:30 PM)
+                        Report Time: {now_str} | Energy Compliance Audit Dashboard
                     </div>
                 </div>
 
@@ -240,7 +253,7 @@ class EmailReporter:
 
                     <!-- Table Title -->
                     <h3 style="font-size: 16px; color: #0f172a; margin-bottom: 12px; margin-top: 24px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;">
-                        📋 Individual 4-Run Status & Overall Shift Compliance Matrix
+                        📋 Multi-Run Status & Shift Compliance Matrix
                     </h3>
 
                     <!-- Status Table -->
@@ -250,11 +263,7 @@ class EmailReporter:
                                 <th style="padding: 10px 12px;">Light UID</th>
                                 <th style="padding: 10px 12px;">Region</th>
                                 <th style="padding: 10px 12px;">Zone</th>
-                                <th style="padding: 10px 10px; text-align: center;">Audit Time</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 1<br>(18:30 - Evening Inside)</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 2<br>(20:30 - Evening Outside)</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 3<br>(07:30 - Morning Inside)</th>
-                                <th style="padding: 10px 10px; text-align: center;">Run 4<br>(09:30 - Morning Outside)</th>
+                                {header_cols_html}
                                 <th style="padding: 10px 12px; text-align: center;">Overall Status</th>
                             </tr>
                         </thead>
@@ -266,8 +275,8 @@ class EmailReporter:
                     <!-- Legend / Explanation Box -->
                     <div style="margin-top: 24px; background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 14px; border-radius: 8px; font-size: 12px; color: #475569;">
                         <strong>Shift Compliance Logic Criteria:</strong><br>
-                        • <strong>Inside Timeslots (Run 1 @ 18:30 & Run 3 @ 07:30):</strong> Relay expected <strong>ON</strong>.<br>
-                        • <strong>Outside Timeslots (Run 2 @ 20:30 & Run 4 @ 09:30):</strong> Relay expected <strong>OFF</strong>.<br>
+                        • <strong>1st Run & 3rd Run:</strong> Relay expected <strong>ON</strong>.<br>
+                        • <strong>2nd Run & 4th Run:</strong> Relay expected <strong>OFF</strong>.<br>
                         • <strong>Overall Status:</strong> Marked <span style="color: #15803d; font-weight: 700;">✅ Good & Efficiently Operative</span> if all shift criteria pass, else <span style="color: #dc2626; font-weight: 700;">❌ Not Successful</span>.
                     </div>
 

@@ -39,7 +39,7 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
     sender_email = os.getenv("SENDER_EMAIL", smtp_user or "no-reply@bbmp.gov.in")
     recipients_raw = os.getenv("RECIPIENT_EMAILS", "")
     recipients = [r.strip() for r in recipients_raw.split(",") if r.strip()]
-    save_local = os.getenv("SAVE_LOCAL_HTML", "True").lower() in ["true", "1", "yes"]
+    save_local = os.getenv("SAVE_LOCAL_HTML", "False").lower() in ["true", "1", "yes"]
 
     if not smtp_user or not smtp_pass or not recipients:
         logger.error("❌ CRITICAL: MISSING SMTP CREDENTIALS OR RECIPIENT EMAILS IN ENVIRONMENT!")
@@ -75,6 +75,12 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
     recorded_slots = sorted(list(audits.keys()))
     last_slot = recorded_slots[-1] if recorded_slots else "DAILY_SUMMARY"
     last_audit_data = audits.get(last_slot, {})
+
+    # Check if recorded audit history contains mock/simulated data due to server failure
+    has_mock_data = any(l.get("is_mock", False) for slot_data in audits.values() for l in slot_data.get("lights", []))
+    if has_mock_data:
+        logger.warning("❌ Recorded audit data contains mock/simulated entries due to ThingsBoard server failure. Skipping email dispatch as requested.")
+        return False
 
     logger.info("==========================================================")
     logger.info(f"GENERATING DAILY EMAIL AUDIT REPORT FOR {date_str}")
@@ -114,13 +120,12 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
     sent = reporter.send_email(subject, html_content)
     if sent:
         logger.info(f"Daily audit email report successfully dispatched to {recipients}.")
+        reset_after_report = os.getenv("RESET_STORAGE_AFTER_REPORT", "True").lower() in ["true", "1", "yes"]
+        if reset_after_report:
+            storage.clear_all_data()
+            logger.info("Audit storage (data/audit_history.json) reset successfully for a fresh start tomorrow.")
     else:
-        logger.info("Email dispatch skipped or failed (check SMTP settings in .env file).")
-    
-    reset_after_report = os.getenv("RESET_STORAGE_AFTER_REPORT", "True").lower() in ["true", "1", "yes"]
-    if reset_after_report:
-        storage.clear_all_data()
-        logger.info("Audit storage (data/audit_history.json) reset successfully for a fresh start tomorrow.")
+        logger.warning("Email dispatch skipped or failed (check SMTP settings in .env file). Retaining audit history in data/audit_history.json.")
 
     return sent
 

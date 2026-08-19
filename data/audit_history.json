@@ -1173,6 +1173,395 @@
         "total_lights": 38,
         "burning_count": 11,
         "off_count": 27
+      },
+      "07:30": {
+        "timestamp": "2026-08-19T07:00:56.475810",
+        "time_slot": "07:30",
+        "lights": [
+          {
+            "uid": "SSC107SM03810",
+            "device_id": "SSC107SM03810",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103029475,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03274",
+            "device_id": "SSC107SM03274",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103030223,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03957",
+            "device_id": "SSC107SM03957",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103030958,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03860",
+            "device_id": "SSC107SM03860",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103031676,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04223",
+            "device_id": "SSC107SM04223",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103032403,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04278",
+            "device_id": "SSC107SM04278",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103033125,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05108",
+            "device_id": "SSC107SM05108",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103033857,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04796",
+            "device_id": "SSC107SM04796",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103034586,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03960",
+            "device_id": "SSC107SM03960",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103035327,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03828",
+            "device_id": "SSC107SM03828",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103036041,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05037",
+            "device_id": "SSC107SM05037",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103036770,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05145",
+            "device_id": "SSC107SM05145",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103037511,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05018",
+            "device_id": "SSC107SM05018",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103038227,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04263",
+            "device_id": "SSC107SM04263",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103038953,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03468",
+            "device_id": "SSC107SM03468",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103039670,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04108",
+            "device_id": "SSC107SM04108",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103040411,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05053",
+            "device_id": "SSC107SM05053",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103041156,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03859",
+            "device_id": "SSC107SM03859",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103041890,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05050",
+            "device_id": "SSC107SM05050",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103042617,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03973",
+            "device_id": "SSC107SM03973",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103043340,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM02652",
+            "device_id": "SSC107SM02652",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103044072,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03823",
+            "device_id": "SSC107SM03823",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103044800,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05124",
+            "device_id": "SSC107SM05124",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103045541,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03250",
+            "device_id": "SSC107SM03250",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103046255,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM02850",
+            "device_id": "SSC107SM02850",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103046983,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04807",
+            "device_id": "SSC107SM04807",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103047724,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03795",
+            "device_id": "SSC107SM03795",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103048439,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04749",
+            "device_id": "SSC107SM04749",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103049181,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03571",
+            "device_id": "SSC107SM03571",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103049925,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03744",
+            "device_id": "SSC107SM03744",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103050660,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04063",
+            "device_id": "SSC107SM04063",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103051378,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04621",
+            "device_id": "SSC107SM04621",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787103052105,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03861",
+            "device_id": "SSC107SM03861",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103052828,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03988",
+            "device_id": "SSC107SM03988",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103053560,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03736",
+            "device_id": "SSC107SM03736",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103054288,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03777",
+            "device_id": "SSC107SM03777",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103055032,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03990",
+            "device_id": "SSC107SM03990",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103055747,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05601",
+            "device_id": "SSC107SM05601",
+            "region": "Bangalore Urban",
+            "zone": "BBMP South Zone",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787103056475,
+            "is_mock": true
+          }
+        ],
+        "total_lights": 38,
+        "burning_count": 11,
+        "off_count": 27
       }
     }
   }

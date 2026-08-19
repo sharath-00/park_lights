@@ -1,1 +1,396 @@
-{}
+{
+  "2026-08-19": {
+    "date": "2026-08-19",
+    "audits": {
+      "19:00": {
+        "timestamp": "2026-08-19T19:08:07.589305",
+        "time_slot": "19:00",
+        "lights": [
+          {
+            "uid": "SSC107SM03810",
+            "device_id": "SSC107SM03810",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787146266461,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03274",
+            "device_id": "SSC107SM03274",
+            "region": "EAST",
+            "zone": "CVRamanNagar",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787146318530,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03957",
+            "device_id": "SSC107SM03957",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787146338537,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM03860",
+            "device_id": "SSC107SM03860",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787146378576,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04223",
+            "device_id": "20ab6fc0-7212-11f1-934d-e50c5007eae6",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM04278",
+            "device_id": "SSC107SM04278",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "ON",
+            "timestamp": 1787146432124,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM05108",
+            "device_id": "SSC107SM05108",
+            "region": "EAST",
+            "zone": "PulakeshiNagar",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787146456986,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04796",
+            "device_id": "401f02f0-76ad-11f1-9f95-73515bb81f31",
+            "region": "EAST",
+            "zone": "SarvagnaNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03960",
+            "device_id": "4548f3a0-7548-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03828",
+            "device_id": "616a2ff0-76a0-11f1-9f95-73515bb81f31",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05037",
+            "device_id": "631d5b60-8a6e-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "PulakeshiNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05145",
+            "device_id": "735a6500-8a40-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "Hebbal",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05018",
+            "device_id": "8c069390-8a3f-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "BBMP Park Light Controllers",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM04263",
+            "device_id": "940f7e70-76a9-11f1-9f95-73515bb81f31",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787144402000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03468",
+            "device_id": "SSC107SM03468",
+            "region": "EAST",
+            "zone": "CVRamanNagar",
+            "relay_status": "OFF",
+            "raw_value": "OFF",
+            "timestamp": 1787146544403,
+            "is_mock": true
+          },
+          {
+            "uid": "SSC107SM04108",
+            "device_id": "ad2407e0-754c-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05053",
+            "device_id": "b2500b40-8a6b-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "Hebbal",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03859",
+            "device_id": "b7937280-769e-11f1-9f95-73515bb81f31",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05050",
+            "device_id": "ba9693d0-8a3b-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "Hebbal",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03973",
+            "device_id": "c1932350-769b-11f1-9f95-73515bb81f31",
+            "region": "EAST",
+            "zone": "PulakeshiNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM02652",
+            "device_id": "c1a52fb0-7140-11f1-934d-e50c5007eae6",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03823",
+            "device_id": "dc9879b0-7511-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05124",
+            "device_id": "e481d440-8a70-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "Hebbal",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03250",
+            "device_id": "f24bebd0-7209-11f1-934d-e50c5007eae6",
+            "region": "EAST",
+            "zone": "CVRamanNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM02850",
+            "device_id": "0b2dd9d1-712c-11f1-934d-e50c5007eae6",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "OFF",
+            "raw_value": "0",
+            "timestamp": 1787128202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM04807",
+            "device_id": "31ded580-7540-11f1-981f-f16ee136eb5b",
+            "region": "EAST",
+            "zone": "ShanthiNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03795",
+            "device_id": "4d4146f0-769e-11f1-9f95-73515bb81f31",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM04749",
+            "device_id": "64684320-753f-11f1-981f-f16ee136eb5b",
+            "region": "EAST",
+            "zone": "SarvagnaNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03571",
+            "device_id": "7236b981-736b-11f1-934d-e50c5007eae6",
+            "region": "EAST",
+            "zone": "CVRamanNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03744",
+            "device_id": "81bb39f0-769d-11f1-9f95-73515bb81f31",
+            "region": "EAST",
+            "zone": "PulakeshiNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM04063",
+            "device_id": "a343bc60-7543-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM04621",
+            "device_id": "badb1b10-76ac-11f1-9f95-73515bb81f31",
+            "region": "EAST",
+            "zone": "ShanthiNagar",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03861",
+            "device_id": "32163a00-7510-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "UNKNOWN",
+            "raw_value": "0",
+            "timestamp": 1785935561038,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03988",
+            "device_id": "32c0b110-76a0-11f1-9f95-73515bb81f31",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787146202000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03736",
+            "device_id": "2aeeaea0-7543-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "OFF",
+            "raw_value": "0",
+            "timestamp": 1787143502000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03777",
+            "device_id": "1da40a80-76a4-11f1-9f95-73515bb81f31",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "UNKNOWN",
+            "raw_value": "0",
+            "timestamp": 1783591020038,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM03990",
+            "device_id": "2aedc440-7543-11f1-981f-f16ee136eb5b",
+            "region": "Bommanahali",
+            "zone": "Bommanahali-Z1",
+            "relay_status": "ON",
+            "raw_value": "1",
+            "timestamp": 1787145302000,
+            "is_mock": false
+          },
+          {
+            "uid": "SSC107SM05601",
+            "device_id": "524078d0-8a5b-11f1-8188-97faf926d60a",
+            "region": "EAST",
+            "zone": "CVRamanNagar",
+            "relay_status": "UNKNOWN",
+            "raw_value": "1",
+            "timestamp": 1787067902000,
+            "is_mock": false
+          }
+        ],
+        "total_lights": 38,
+        "burning_count": 27,
+        "off_count": 8
+      }
+    }
+  }
+}

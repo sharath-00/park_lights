@@ -199,6 +199,8 @@ class EmailReporter:
             </div>
             """
 
+        date_str = daily_summary.get("date", datetime.now().strftime("%Y-%m-%d")) if daily_summary else datetime.now().strftime("%Y-%m-%d")
+
         # Full HTML Layout
         html_content = f"""
         <!DOCTYPE html>
@@ -217,10 +219,10 @@ class EmailReporter:
                         BBMP Smart City Energy Management
                     </div>
                     <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff;">
-                      Daily Park Lights Monitoring Report
+                      Daily Park Lights Monitoring Report ({date_str})
                     </h1>
                     <div style="margin-top: 8px; font-size: 13px; color: #94a3b8;">
-                        Report Time: {now_str} | Energy Compliance Audit Dashboard
+                        Audit Date: <strong style="color: #ffffff;">{date_str}</strong> | Generated: {now_str}
                     </div>
                 </div>
 

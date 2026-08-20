@@ -99,9 +99,9 @@ def run_audit(time_slot: str = "AUTO", send_mail: Optional[bool] = None, custom_
     audit_count = len(audits_today)
 
     # Auto-determine send_mail if not explicitly passed
-    has_mock_data = any(l.get("is_mock", False) for l in light_results) or not tb_client.token
-    if has_mock_data:
-        logger.warning("❌ ThingsBoard server is unavailable or returned mock fallback data. Skipping email report dispatch as requested.")
+    is_pure_mock = not tb_client.token or all(l.get("is_mock", False) for l in light_results)
+    if is_pure_mock:
+        logger.warning("❌ ThingsBoard server is unavailable (auth failed). Skipping email report dispatch as requested.")
         should_send_mail = False
     elif send_mail is None:
         is_configured_slot = bool(configured_slots and time_slot in configured_slots)

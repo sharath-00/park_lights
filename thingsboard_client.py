@@ -160,27 +160,31 @@ class ThingsBoardClient:
         customer_id = "e2119df0-45c3-11f0-94dc-77130b2f47e9"
         url = f"{self.host}/api/customer/{customer_id}/deviceInfos"
         params = {"pageSize": 20, "page": 0, "textSearch": device_identifier}
-        try:
-            res = requests.get(url, headers=self.headers, params=params, timeout=10)
-            if res.status_code == 200:
-                data = res.json().get("data", [])
-                for dev in data:
-                    dev_id = dev["id"]["id"]
-                    label = dev.get("label")
-                    name = dev.get("name")
-                    if label:
-                        self._device_cache[label] = dev_id
-                    if name:
-                        self._device_cache[name] = dev_id
-                    if label == device_identifier or name == device_identifier:
-                        logger.info(f"Resolved UID '{device_identifier}' -> Device Name: '{dev.get('name')}', ID: '{dev_id}'")
+        for attempt in range(1, 3):
+            try:
+                res = requests.get(url, headers=self.headers, params=params, timeout=10)
+                if res.status_code == 200:
+                    data = res.json().get("data", [])
+                    for dev in data:
+                        dev_id = dev["id"]["id"]
+                        label = dev.get("label")
+                        name = dev.get("name")
+                        if label:
+                            self._device_cache[label] = dev_id
+                        if name:
+                            self._device_cache[name] = dev_id
+                        if label == device_identifier or name == device_identifier:
+                            logger.info(f"Resolved UID '{device_identifier}' -> Device Name: '{dev.get('name')}', ID: '{dev_id}'")
+                            return dev_id
+                    if data:
+                        dev_id = data[0]["id"]["id"]
+                        self._device_cache[device_identifier] = dev_id
                         return dev_id
-                if data:
-                    dev_id = data[0]["id"]["id"]
-                    self._device_cache[device_identifier] = dev_id
-                    return dev_id
-        except Exception as e:
-            logger.debug(f"Customer device search failed for '{device_identifier}': {e}")
+            except Exception as e:
+                logger.debug(f"Customer device search attempt {attempt}/2 failed for '{device_identifier}': {e}")
+                if attempt < 2:
+                    import time
+                    time.sleep(1)
 
         return None
 
@@ -277,29 +281,46 @@ class ThingsBoardClient:
 
         if self.token:
             url = f"{self.host}/api/plugins/telemetry/DEVICE/{device_id}/values/timeseries"
-            try:
-                res = requests.get(url, headers=self.headers, timeout=10)
-                if res.status_code == 200:
-                    telemetry_data = res.json()
-                    status, raw_val, ts = self._extract_relay_status(telemetry_data)
-                    return {
-                        "uid": light_uid,
-                        "device_id": device_id,
-                        "region": region,
-                        "zone": zone,
-                        "relay_status": status,
-                        "raw_value": raw_val,
-                        "timestamp": ts,
-                        "is_mock": False
-                    }
-                elif res.status_code == 401:
-                    # Token expired, retry login once
-                    if self.login():
-                        return self.fetch_light_status(light_uid)
-            except Exception as e:
-                logger.error(f"Error fetching telemetry for light {light_uid}: {e}")
+            for attempt in range(1, 3):
+                try:
+                    res = requests.get(url, headers=self.headers, timeout=12)
+                    if res.status_code == 200:
+                        telemetry_data = res.json()
+                        status, raw_val, ts = self._extract_relay_status(telemetry_data)
+                        return {
+                            "uid": light_uid,
+                            "device_id": device_id,
+                            "region": region,
+                            "zone": zone,
+                            "relay_status": status,
+                            "raw_value": raw_val,
+                            "timestamp": ts,
+                            "is_mock": False
+                        }
+                    elif res.status_code == 401 and attempt == 1:
+                        # Token expired, retry login once
+                        if self.login():
+                            return self.fetch_light_status(light_uid)
+                except Exception as e:
+                    logger.error(f"Error fetching telemetry for light {light_uid} (attempt {attempt}/2): {e}")
+                    if attempt < 2:
+                        import time
+                        time.sleep(1.5)
 
-        # Fallback / Demo handling if ThingsBoard instance is unavailable or credentials are default template
+            # If authenticated but individual telemetry fetch failed after retries, return UNKNOWN without setting is_mock=True
+            logger.warning(f"Unable to fetch live telemetry for light '{light_uid}' due to network/server response. Returning UNKNOWN status.")
+            return {
+                "uid": light_uid,
+                "device_id": device_id,
+                "region": region,
+                "zone": zone,
+                "relay_status": "UNKNOWN",
+                "raw_value": None,
+                "timestamp": None,
+                "is_mock": False
+            }
+
+        # Fallback / Demo handling only if ThingsBoard authentication completely failed (no token)
         logger.info(f"Using simulated telemetry fallback for light '{light_uid}'.")
         return self._generate_simulated_status(light_uid)
 
@@ -346,13 +367,146 @@ class ThingsBoardClient:
 
         return "UNKNOWN", None, None
 
+    def fetch_daily_4_slots_telemetry(self, light_uids: List[str], target_slots: Optional[List[str]] = None) -> Dict[str, Any]:
+        """
+        Queries ThingsBoard historical timeseries telemetry for all target light UIDs across the last 24 hours
+        in a single execution, extracts relay status for all target time slots (e.g. 18:30, 20:30, 07:30, 09:30),
+        and returns a complete daily_summary dictionary for email reporting.
+        """
+        import time
+        from datetime import datetime, timedelta
+
+        if not target_slots:
+            audit_timings_raw = os.getenv("AUDIT_TIMINGS", "19:00,22:00,06:00,07:00")
+            target_slots = [s.strip() for s in audit_timings_raw.split(",") if s.strip()]
+
+        if not self.token:
+            self.login()
+
+        now = datetime.now()
+        end_ts = int(time.time() * 1000)
+        start_ts = int((time.time() - 24 * 3600) * 1000)
+        date_str = now.strftime("%Y-%m-%d")
+
+        audits = {
+            slot: {
+                "timestamp": now.isoformat(),
+                "time_slot": slot,
+                "lights": [],
+                "total_lights": len(light_uids),
+                "burning_count": 0,
+                "off_count": 0
+            }
+            for slot in target_slots
+        }
+
+        logger.info(f"Fetching historical timeseries telemetry for {len(light_uids)} lights across 4 slots: {target_slots}...")
+
+        for uid in light_uids:
+            device_id = uid
+            if self.token and len(uid) != 36:
+                resolved_id = self.get_device_id_by_name(uid)
+                if resolved_id:
+                    device_id = resolved_id
+
+            if uid in KNOWN_UID_METADATA:
+                region, zone = KNOWN_UID_METADATA[uid]
+            else:
+                region, zone = self.fetch_device_metadata(device_id)
+
+            telemetry_entries = []
+            is_mock_run = not bool(self.token)
+
+            if self.token:
+                url = f"{self.host}/api/plugins/telemetry/DEVICE/{device_id}/values/timeseries"
+                params = {
+                    "keys": f"{self.relay_key},relayStatus,rly,outputState,ctrlState",
+                    "startTs": start_ts,
+                    "endTs": end_ts,
+                    "limit": 1000,
+                    "agg": "NONE"
+                }
+                for attempt in range(1, 3):
+                    try:
+                        res = requests.get(url, headers=self.headers, params=params, timeout=12)
+                        if res.status_code == 200:
+                            t_data = res.json()
+                            for k in [self.relay_key, "rly", "relayStatus", "outputState", "ctrlState"]:
+                                if k in t_data and t_data[k]:
+                                    telemetry_entries = t_data[k]
+                                    break
+                            break
+                        elif res.status_code == 401 and attempt == 1:
+                            if self.login():
+                                continue
+                    except Exception as e:
+                        logger.error(f"Error fetching timeseries for light {uid} (attempt {attempt}/2): {e}")
+
+            telemetry_entries.sort(key=lambda x: x.get("ts", 0))
+
+            for slot in target_slots:
+                slot_h, slot_m = map(int, slot.split(":"))
+                target_dt = now.replace(hour=slot_h, minute=slot_m, second=0, microsecond=0)
+                if target_dt > now:
+                    target_dt -= timedelta(days=1)
+                
+                target_ms = int(target_dt.timestamp() * 1000)
+
+                status = "UNKNOWN"
+                raw_val = None
+                ts_val = None
+
+                if is_mock_run:
+                    sim_status = self._generate_simulated_status(uid)
+                    status = sim_status.get("relay_status", "UNKNOWN")
+                    raw_val = sim_status.get("raw_value")
+                    ts_val = sim_status.get("timestamp")
+                    is_mock_entry = True
+                else:
+                    is_mock_entry = False
+                    valid_before = [e for e in telemetry_entries if e.get("ts", 0) <= target_ms + 1800000]
+                    if valid_before:
+                        best = valid_before[-1]
+                        raw_val = best.get("value")
+                        ts_val = best.get("ts")
+                        if ts_val and abs(target_ms - ts_val) > (6 * 3600 * 1000):
+                            status = "UNKNOWN"
+                        elif str(raw_val).upper() in ["1", "TRUE", "ON", "BURNING", "HIGH"]:
+                            status = "ON"
+                        elif str(raw_val).upper() in ["0", "FALSE", "OFF", "LOW"]:
+                            status = "OFF"
+                        else:
+                            status = str(raw_val).upper()
+                    else:
+                        status = "UNKNOWN"
+
+                light_info = {
+                    "uid": uid,
+                    "device_id": device_id,
+                    "region": region,
+                    "zone": zone,
+                    "relay_status": status,
+                    "raw_value": raw_val,
+                    "timestamp": ts_val,
+                    "is_mock": is_mock_entry
+                }
+
+                audits[slot]["lights"].append(light_info)
+
+        for slot in target_slots:
+            audits[slot]["burning_count"] = sum(1 for l in audits[slot]["lights"] if l.get("relay_status") == "ON")
+            audits[slot]["off_count"] = sum(1 for l in audits[slot]["lights"] if l.get("relay_status") == "OFF")
+
+        return {
+            "date": date_str,
+            "audits": audits
+        }
+
     def _generate_simulated_status(self, light_uid: str) -> Dict[str, Any]:
         """
         Provides deterministic simulation for demo/testing purposes when ThingsBoard API is unconfigured or returns 503.
         """
         import time
-        # Deterministically assign some lights as ON (burning) to demonstrate fault alerts
-        # e.g., lights containing '02' or '04' will be ON/Burning
         is_burning = ("02" in light_uid or "04" in light_uid or "BURNING" in light_uid.upper())
         status = "ON" if is_burning else "OFF"
         

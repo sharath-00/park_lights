@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 from storage import AuditStorage
 from email_reporter import EmailReporter
+from thingsboard_client import ThingsBoardClient
 
 # Configure logging
 logging.basicConfig(
@@ -48,38 +49,39 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
         logger.error(f"  -> RECIPIENT_EMAILS present: {bool(recipients)}")
         logger.error("👉 Please add SMTP_HOST, SMTP_PORT, SMTP_USERNAME, SMTP_PASSWORD, SENDER_EMAIL, and RECIPIENT_EMAILS to GitHub Repository Secrets at: https://github.com/sharath-00/park_lights/settings/secrets/actions")
 
-    storage = AuditStorage()
-    daily_summary = storage.get_daily_summary(date_str)
-
-    if not daily_summary or not daily_summary.get("audits"):
-        all_dates = sorted(list(storage.data.keys()))
-        if all_dates:
-            latest_date = all_dates[-1]
-            logger.info(f"No audit records found for date '{date_str}'. Falling back to latest recorded date in storage: '{latest_date}'.")
-            date_str = latest_date
-            daily_summary = storage.get_daily_summary(date_str)
-
-    if not daily_summary or not daily_summary.get("audits"):
-        logger.warning(f"No audit records found in storage for date {date_str}. Aborting report generation.")
-        return False
-
-    # Optional UID filtering
+    # Configuration
+    tb_host = os.getenv("THINGSBOARD_HOST", "https://demo.thingsboard.io")
+    tb_user = os.getenv("THINGSBOARD_USERNAME", "admin@thingsboard.org")
+    tb_pass = os.getenv("THINGSBOARD_PASSWORD", "admin")
+    relay_key = os.getenv("TELEMETRY_RELAY_KEY", "rly")
+    
     if target_uids:
-        filtered_audits = {}
-        for slot, slot_data in daily_summary.get("audits", {}).items():
-            lights = [l for l in slot_data.get("lights", []) if l.get("uid") in target_uids]
-            filtered_audits[slot] = {**slot_data, "lights": lights}
-        daily_summary = {**daily_summary, "audits": filtered_audits}
+        light_uids = target_uids
+    else:
+        light_uids_raw = os.getenv("LIGHT_UIDS", "")
+        light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
 
-    audits = daily_summary.get("audits", {})
+    tb_client = ThingsBoardClient(host=tb_host, username=tb_user, password=tb_pass, relay_key=relay_key)
+    
+    # Single-run fetch: Query historical 24h telemetry for all 4 slots directly from ThingsBoard
+    logger.info("Connecting to ThingsBoard to fetch full 24-hour shift telemetry for 4 audit slots in a single run...")
+    daily_summary = tb_client.fetch_daily_4_slots_telemetry(light_uids)
+    
+    # Save to storage for history record
+    storage = AuditStorage()
+    if daily_summary and daily_summary.get("audits"):
+        for slot, slot_data in daily_summary["audits"].items():
+            storage.record_audit(slot, slot_data.get("lights", []), date_str=daily_summary.get("date"))
+
+    audits = daily_summary.get("audits", {}) if daily_summary else {}
     recorded_slots = sorted(list(audits.keys()))
     last_slot = recorded_slots[-1] if recorded_slots else "DAILY_SUMMARY"
     last_audit_data = audits.get(last_slot, {})
 
-    # Check if recorded audit history contains mock/simulated data due to server failure
-    has_mock_data = any(l.get("is_mock", False) for slot_data in audits.values() for l in slot_data.get("lights", []))
-    if has_mock_data:
-        logger.warning("❌ Recorded audit data contains mock/simulated entries due to ThingsBoard server failure. Skipping email dispatch as requested.")
+    # Check if recorded audit history contains purely synthetic mock data (e.g. complete server failure)
+    is_pure_mock = all(l.get("is_mock", False) for slot_data in audits.values() for l in slot_data.get("lights", []))
+    if is_pure_mock and audits:
+        logger.warning("❌ Recorded audit data contains only synthetic mock entries. Skipping email dispatch.")
         return False
 
     logger.info("==========================================================")

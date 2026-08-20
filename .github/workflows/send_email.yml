@@ -1,4 +1,4 @@
-name: 2. Generate & Send Daily Email Report
+name: Daily BBMP Park Lights Audit & Email Report
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
         required: false
         default: ''
   repository_dispatch:
-    types: [report_trigger, send_email]
+    types: [audit_trigger, report_trigger, send_email]
 
 permissions:
   contents: write
@@ -35,6 +35,11 @@ jobs:
       - name: Dispatch Email Audit Report
         env:
           TZ: "Asia/Kolkata"
+          THINGSBOARD_HOST: ${{ secrets.THINGSBOARD_HOST }}
+          THINGSBOARD_USERNAME: ${{ secrets.THINGSBOARD_USERNAME }}
+          THINGSBOARD_PASSWORD: ${{ secrets.THINGSBOARD_PASSWORD }}
+          LIGHT_UIDS: ${{ secrets.LIGHT_UIDS }}
+          TELEMETRY_RELAY_KEY: ${{ secrets.TELEMETRY_RELAY_KEY }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USE_TLS: ${{ secrets.SMTP_USE_TLS }}

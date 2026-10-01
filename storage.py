@@ -39,7 +39,7 @@ class AuditStorage:
 
     def record_audit(self, time_slot: str, light_results: List[Dict[str, Any]], date_str: Optional[str] = None) -> Dict[str, Any]:
         """
-        Record audit snapshot for a specific time slot (e.g. '07:30' or '09:30').
+        Record audit snapshot for a specific time slot (e.g. '05:15' or '18:30').
         """
         if not date_str:
             date_str = datetime.now().strftime("%Y-%m-%d")

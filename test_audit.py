@@ -18,12 +18,12 @@ logger = logging.getLogger("TestAuditRunner")
 def normalize_time_slot(slot_str: str) -> str:
     """
     Normalizes time slot identifier. If not specified or MANUAL_CHECK/AUTO, formats current execution time (HH:MM).
-    If execution time is within 20 minutes of standard shift timings (18:30, 20:30, 07:30, 09:30), aligns to standard slot.
+    If execution time is within 20 minutes of standard shift timings (05:15, 07:00, 18:30, 22:00), aligns to standard slot.
     """
     if not slot_str or slot_str in ["AUTO", "MANUAL_CHECK"]:
         slot_str = datetime.now().strftime("%H:%M")
 
-    standard_slots = ["18:30", "20:30", "07:30", "09:30"]
+    standard_slots = ["05:15", "07:00", "18:30", "22:00"]
     try:
         parts = slot_str.split(":")
         run_minutes = int(parts[0]) * 60 + int(parts[1])
@@ -60,11 +60,32 @@ def run_audit(time_slot: str = "AUTO", send_mail: Optional[bool] = None, custom_
     if custom_uids:
         light_uids = custom_uids
     else:
-        light_uids_raw = os.getenv("LIGHT_UIDS", "BBMP_PARK_LIGHT_01,BBMP_PARK_LIGHT_02,BBMP_PARK_LIGHT_03,BBMP_PARK_LIGHT_04,BBMP_PARK_LIGHT_05")
-        light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+        sheet_url = os.getenv("LIGHT_UIDS_SHEET_URL", "")
+        if sheet_url:
+            try:
+                import requests
+                logger.info(f"Fetching Light UIDs from Google Sheet: {sheet_url}")
+                res = requests.get(sheet_url, timeout=10)
+                res.raise_for_status()
+                lines = res.text.strip().split('\n')
+                light_uids = []
+                for idx, line in enumerate(lines):
+                    if idx == 0 and "UID" in line.upper():
+                        continue
+                    parts = line.split(',')
+                    if parts and parts[0].strip():
+                        light_uids.append(parts[0].strip())
+                logger.info(f"Successfully loaded {len(light_uids)} UIDs from Google Sheet.")
+            except Exception as e:
+                logger.error(f"Failed to fetch UIDs from Google Sheet: {e}")
+                light_uids_raw = os.getenv("LIGHT_UIDS", "")
+                light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+        else:
+            light_uids_raw = os.getenv("LIGHT_UIDS", "BBMP_PARK_LIGHT_01,BBMP_PARK_LIGHT_02")
+            light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
 
     expected_daily_runs = int(os.getenv("EXPECTED_DAILY_RUNS", "4"))
-    audit_timings_raw = os.getenv("AUDIT_TIMINGS", "07:30,09:30,18:30,20:30")
+    audit_timings_raw = os.getenv("AUDIT_TIMINGS", "05:15,07:00,18:30,22:00")
     configured_slots = [s.strip() for s in audit_timings_raw.split(",") if s.strip()]
 
     smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
@@ -163,7 +184,7 @@ def run_audit(time_slot: str = "AUTO", send_mail: Optional[bool] = None, custom_
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description="BBMP Park Light Audit Runner")
-    parser.add_argument("time_slot", nargs="?", default="MANUAL_CHECK", help="Time slot identifier (e.g. 07:30, 09:30, 18:30, 20:30)")
+    parser.add_argument("time_slot", nargs="?", default="MANUAL_CHECK", help="Time slot identifier (e.g. 05:15, 07:00, 18:30, 22:00)")
     parser.add_argument("--uids", "-u", help="Comma-separated list of light UIDs to check (e.g. SSC107SM04668,SSC107SM03799)")
     parser.add_argument("--send-email", "--force-email", "--last-run", dest="force_email", action="store_true", help="Force send email report on this run")
     parser.add_argument("--no-email", dest="no_email", action="store_true", help="Force skip email report on this run")

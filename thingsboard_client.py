@@ -370,7 +370,7 @@ class ThingsBoardClient:
     def fetch_daily_4_slots_telemetry(self, light_uids: List[str], target_slots: Optional[List[str]] = None) -> Dict[str, Any]:
         """
         Queries ThingsBoard historical timeseries telemetry for all target light UIDs across the last 24 hours
-        in a single execution, extracts relay status for all target time slots (e.g. 18:30, 20:30, 07:30, 09:30),
+        in a single execution, extracts relay status for all target time slots (e.g. 05:15, 07:00, 18:30, 22:00),
         and returns a complete daily_summary dictionary for email reporting.
         """
         import time

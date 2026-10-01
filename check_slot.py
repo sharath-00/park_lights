@@ -8,8 +8,22 @@ def check_slot():
     tb_user = os.getenv("THINGSBOARD_USERNAME")
     tb_pass = os.getenv("THINGSBOARD_PASSWORD")
     relay_key = os.getenv("TELEMETRY_RELAY_KEY", "rly")
-    light_uids_raw = os.getenv("LIGHT_UIDS", "")
-    light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+    sheet_url = os.getenv("LIGHT_UIDS_SHEET_URL", "")
+    if sheet_url:
+        import requests
+        try:
+            res = requests.get(sheet_url, timeout=10)
+            res.raise_for_status()
+            lines = res.text.strip().split('\n')
+            light_uids = []
+            for idx, line in enumerate(lines):
+                if idx == 0 and "UID" in line.upper(): continue
+                parts = line.split(',')
+                if parts and parts[0].strip(): light_uids.append(parts[0].strip())
+        except Exception:
+            light_uids = [u.strip() for u in os.getenv("LIGHT_UIDS", "").split(",") if u.strip()]
+    else:
+        light_uids = [u.strip() for u in os.getenv("LIGHT_UIDS", "").split(",") if u.strip()]
 
     tb_client = ThingsBoardClient(host=tb_host, username=tb_user, password=tb_pass, relay_key=relay_key)
     daily_summary = tb_client.fetch_daily_4_slots_telemetry(light_uids, target_slots=["05:15"])

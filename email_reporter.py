@@ -59,7 +59,7 @@ class EmailReporter:
         recorded_slots.sort(key=lambda sk: audits.get(sk, {}).get("timestamp", ""))
 
         if not recorded_slots:
-            slot_keys = ["18:30", "20:30", "07:30", "09:30"]
+            slot_keys = ["18:30", "22:00", "05:15", "07:00"]
         else:
             slot_keys = recorded_slots
 

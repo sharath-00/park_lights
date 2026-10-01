@@ -1,14 +1,14 @@
 # BBMP Park Light Relay Status Monitoring & Automated Email Dashboard
 
-An automated Python solution that integrates with **ThingsBoard REST API** to check the relay status of park lights at designated daylight checkpoints (**7:30 AM** and **9:30 AM**). The system detects lights burning unnecessarily outside park operational hours to save energy and dispatches an automated HTML email dashboard.
+An automated Python solution that integrates with **ThingsBoard REST API** to check the relay status of park lights at designated daylight checkpoints (**5:15 AM**, **7:00 AM**, **6:30 PM**, **10:00 PM**). The system detects lights burning unnecessarily outside park operational hours to save energy and dispatches an automated HTML email dashboard.
 
 ---
 
 ## 🌟 Features
 
 - **ThingsBoard REST API Client**: Authenticates via JWT (`/api/auth/login`) and retrieves real-time telemetry/timeseries data (`/api/plugins/telemetry/DEVICE/{deviceId}/values/timeseries`).
-- **Scheduled Checkpoints (07:30 & 09:30)**: Uses `APScheduler` cron triggers to run daily status checks automatically.
-- **7:30 AM vs 9:30 AM Comparison Matrix**: Maintains audit history and renders a side-by-side comparison matrix of relay status for all light UIDs.
+- **Scheduled Checkpoints**: Uses `APScheduler` cron triggers to run daily status checks automatically.
+- **Time Slot Comparison Matrix**: Maintains audit history and renders a side-by-side comparison matrix of relay status for all light UIDs.
 - **Automated HTML Email Dashboard**: Formats alerts, total lights count, compliance rates, and color-coded status badges into a responsive HTML email sent via SMTP.
 - **Offline HTML Preview**: Saves generated HTML email reports to `logs/` for offline inspection or testing.
 
@@ -48,7 +48,7 @@ LIGHT_UIDS=PARK_LIGHT_01,PARK_LIGHT_02,PARK_LIGHT_03,PARK_LIGHT_04,PARK_LIGHT_05
 TELEMETRY_RELAY_KEY=relayStatus
 
 # Audit Schedule Configuration (24-hour HH:MM format)
-AUDIT_TIMINGS=07:30,09:30
+AUDIT_TIMINGS=05:15,07:00,18:30,22:00
 
 # Email Notification / SMTP Configuration
 SMTP_HOST=smtp.gmail.com
@@ -73,16 +73,16 @@ pip install -r requirements.txt
 To fetch light statuses from ThingsBoard and generate the HTML email dashboard preview right now:
 
 ```bash
-# Test 7:30 AM audit check
-python test_audit.py 07:30
+# Test 05:15 audit check
+python test_audit.py 05:15
 
-# Test 9:30 AM audit check
-python test_audit.py 09:30
+# Test 18:30 audit check
+python test_audit.py 18:30
 ```
 This will log the status of each UID and save an HTML preview in `logs/email_report_YYYYMMDD_HHMM.html`.
 
 ### 3. Start Automated Background Service
-To run the automated scheduler that triggers every day at **7:30 AM** and **9:30 AM**:
+To run the automated scheduler that triggers every day at the configured times:
 
 ```bash
 python main.py

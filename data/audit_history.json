@@ -1,1 +1,39 @@
-{}
+{
+  "2026-10-06": {
+    "date": "2026-10-06",
+    "audits": {
+      "19:00": {
+        "timestamp": "2026-10-06T14:47:37.248680",
+        "time_slot": "19:00",
+        "lights": [],
+        "total_lights": 0,
+        "burning_count": 0,
+        "off_count": 0
+      },
+      "22:00": {
+        "timestamp": "2026-10-06T14:47:37.248877",
+        "time_slot": "22:00",
+        "lights": [],
+        "total_lights": 0,
+        "burning_count": 0,
+        "off_count": 0
+      },
+      "06:00": {
+        "timestamp": "2026-10-06T14:47:37.249233",
+        "time_slot": "06:00",
+        "lights": [],
+        "total_lights": 0,
+        "burning_count": 0,
+        "off_count": 0
+      },
+      "07:00": {
+        "timestamp": "2026-10-06T14:47:37.249550",
+        "time_slot": "07:00",
+        "lights": [],
+        "total_lights": 0,
+        "burning_count": 0,
+        "off_count": 0
+      }
+    }
+  }
+}

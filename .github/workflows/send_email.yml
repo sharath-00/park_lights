@@ -39,6 +39,7 @@ jobs:
           THINGSBOARD_USERNAME: ${{ secrets.THINGSBOARD_USERNAME }}
           THINGSBOARD_PASSWORD: ${{ secrets.THINGSBOARD_PASSWORD }}
           LIGHT_UIDS: ${{ secrets.LIGHT_UIDS }}
+          LIGHT_UIDS_SHEET_URL: ${{ secrets.LIGHT_UIDS_SHEET_URL }}
           TELEMETRY_RELAY_KEY: ${{ secrets.TELEMETRY_RELAY_KEY }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}

@@ -41,6 +41,8 @@ jobs:
           LIGHT_UIDS: ${{ secrets.LIGHT_UIDS }}
           LIGHT_UIDS_SHEET_URL: ${{ secrets.LIGHT_UIDS_SHEET_URL }}
           TELEMETRY_RELAY_KEY: ${{ secrets.TELEMETRY_RELAY_KEY }}
+          AUDIT_TIMINGS: ${{ secrets.AUDIT_TIMINGS || '19:00,22:00,05:15,07:00' }}
+          EXPECTED_DAILY_RUNS: ${{ secrets.EXPECTED_DAILY_RUNS || '4' }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_USE_TLS: ${{ secrets.SMTP_USE_TLS }}

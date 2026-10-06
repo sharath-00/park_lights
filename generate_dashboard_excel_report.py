@@ -37,8 +37,7 @@ def generate_exact_dashboard_excel():
             print(f"Failed to fetch UIDs from Google Sheet: {e}")
             
     if not light_uids:
-        light_uids_raw = os.getenv("LIGHT_UIDS", "")
-        light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+        print("Warning: No UIDs loaded. Please check LIGHT_UIDS_SHEET_URL.")
     
     print(f"Connecting to ThingsBoard at {tb_host}...")
     client = ThingsBoardClient(host=tb_host, username=tb_user, password=tb_pass, relay_key=relay_key)

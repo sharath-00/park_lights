@@ -77,11 +77,10 @@ def send_daily_email_report(date_str: Optional[str] = None, target_uids: Optiona
                 logger.info(f"Successfully loaded {len(light_uids)} UIDs from Google Sheet.")
             except Exception as e:
                 logger.error(f"Failed to fetch UIDs from Google Sheet: {e}")
-                light_uids_raw = os.getenv("LIGHT_UIDS", "")
-                light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+                light_uids = []
         else:
-            light_uids_raw = os.getenv("LIGHT_UIDS", "")
-            light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+            logger.warning("LIGHT_UIDS_SHEET_URL is not set.")
+            light_uids = []
 
     tb_client = ThingsBoardClient(host=tb_host, username=tb_user, password=tb_pass, relay_key=relay_key)
     

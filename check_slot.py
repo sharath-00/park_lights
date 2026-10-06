@@ -21,9 +21,10 @@ def check_slot():
                 parts = line.split(',')
                 if parts and parts[0].strip(): light_uids.append(parts[0].strip())
         except Exception:
-            light_uids = [u.strip() for u in os.getenv("LIGHT_UIDS", "").split(",") if u.strip()]
+            light_uids = []
     else:
-        light_uids = [u.strip() for u in os.getenv("LIGHT_UIDS", "").split(",") if u.strip()]
+        print("Warning: LIGHT_UIDS_SHEET_URL is not set.")
+        light_uids = []
 
     tb_client = ThingsBoardClient(host=tb_host, username=tb_user, password=tb_pass, relay_key=relay_key)
     daily_summary = tb_client.fetch_daily_4_slots_telemetry(light_uids, target_slots=["05:15"])

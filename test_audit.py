@@ -78,11 +78,10 @@ def run_audit(time_slot: str = "AUTO", send_mail: Optional[bool] = None, custom_
                 logger.info(f"Successfully loaded {len(light_uids)} UIDs from Google Sheet.")
             except Exception as e:
                 logger.error(f"Failed to fetch UIDs from Google Sheet: {e}")
-                light_uids_raw = os.getenv("LIGHT_UIDS", "")
-                light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+                light_uids = []
         else:
-            light_uids_raw = os.getenv("LIGHT_UIDS", "BBMP_PARK_LIGHT_01,BBMP_PARK_LIGHT_02")
-            light_uids = [u.strip() for u in light_uids_raw.split(",") if u.strip()]
+            logger.warning("LIGHT_UIDS_SHEET_URL is not set.")
+            light_uids = []
 
     expected_daily_runs = int(os.getenv("EXPECTED_DAILY_RUNS", "4"))
     audit_timings_raw = os.getenv("AUDIT_TIMINGS", "05:15,07:00,18:30,22:00")

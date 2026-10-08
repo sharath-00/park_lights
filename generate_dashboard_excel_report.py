@@ -18,26 +18,10 @@ def generate_exact_dashboard_excel():
     tb_pass = os.getenv("THINGSBOARD_PASSWORD", "vinoth777")
     relay_key = os.getenv("TELEMETRY_RELAY_KEY", "rly")
     
-    sheet_url = os.getenv("LIGHT_UIDS_SHEET_URL", "")
-    light_uids = []
-    if sheet_url:
-        try:
-            print(f"Fetching Light UIDs from Google Sheet: {sheet_url}")
-            res = requests.get(sheet_url, timeout=10)
-            res.raise_for_status()
-            lines = res.text.strip().split('\n')
-            for idx, line in enumerate(lines):
-                if idx == 0 and "UID" in line.upper():
-                    continue
-                parts = line.split(',')
-                if parts and parts[0].strip():
-                    light_uids.append(parts[0].strip())
-            print(f"Successfully loaded {len(light_uids)} UIDs from Google Sheet.")
-        except Exception as e:
-            print(f"Failed to fetch UIDs from Google Sheet: {e}")
-            
+    from uid_parser import get_light_uids
+    light_uids = get_light_uids()
     if not light_uids:
-        print("Warning: No UIDs loaded. Please check LIGHT_UIDS_SHEET_URL.")
+        print("Warning: No UIDs loaded. Please check LIGHT_UIDS_SHEET_URL or LIGHT_UIDS.")
     
     print(f"Connecting to ThingsBoard at {tb_host}...")
     client = ThingsBoardClient(host=tb_host, username=tb_user, password=tb_pass, relay_key=relay_key)

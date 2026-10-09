@@ -49,10 +49,19 @@ def fetch_light_uids_from_url(sheet_url):
             uid_idx = upper_headers.index("UID") if "UID" in upper_headers else 0
             zone_idx = upper_headers.index("ZONE") if "ZONE" in upper_headers else -1
             
+            exclude_zones = [z.strip().lower() for z in os.getenv("EXCLUDE_ZONES", "").split(",") if z.strip()]
+            include_zones = [z.strip().lower() for z in os.getenv("INCLUDE_ZONES", "").split(",") if z.strip()]
+
             for row in reader:
                 if len(row) > uid_idx and row[uid_idx].strip():
-                    if zone_idx != -1 and len(row) > zone_idx and "not in dash" in row[zone_idx].lower():
-                        continue
+                    if zone_idx != -1 and len(row) > zone_idx:
+                        zone_val = row[zone_idx].strip().lower()
+                        if "not in dash" in zone_val:
+                            continue
+                        if exclude_zones and any(ex in zone_val for ex in exclude_zones):
+                            continue
+                        if include_zones and not any(inc in zone_val for inc in include_zones):
+                            continue
                     light_uids_raw.append(row[uid_idx].strip())
                     
         # Remove duplicates while preserving order

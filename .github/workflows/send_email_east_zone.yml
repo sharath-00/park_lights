@@ -1,4 +1,4 @@
-name: Daily BBMP Park Lights Audit (Bommanahalli)
+name: Daily BBMP Park Lights Audit (East Zone)
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
         required: false
         default: ''
   repository_dispatch:
-    types: [audit_trigger_bommanahalli, report_trigger_bommanahalli, send_email_bommanahalli]
+    types: [audit_trigger_east_zone, report_trigger_east_zone, send_email_east_zone]
 
 permissions:
   contents: write
@@ -41,7 +41,7 @@ jobs:
           LIGHT_UIDS: ${{ secrets.LIGHT_UIDS }}
           LIGHT_UIDS_SHEET_URL: ${{ secrets.LIGHT_UIDS_SHEET_URL }}
           TELEMETRY_RELAY_KEY: ${{ secrets.TELEMETRY_RELAY_KEY }}
-          AUDIT_TIMINGS: ${{ secrets.AUDIT_TIMINGS || '19:00,22:00,05:15,07:00' }}
+          AUDIT_TIMINGS: ${{ secrets.AUDIT_TIMINGS_EAST_ZONE || '19:00,22:00,05:00,07:00' }}
           EXPECTED_DAILY_RUNS: ${{ secrets.EXPECTED_DAILY_RUNS || '4' }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
@@ -49,9 +49,9 @@ jobs:
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
-          RECIPIENT_EMAILS: ${{ secrets.RECIPIENT_EMAILS_BOMMANAHALLI || secrets.RECIPIENT_EMAILS }}
+          RECIPIENT_EMAILS: ${{ secrets.RECIPIENT_EMAILS_EAST_ZONE || secrets.RECIPIENT_EMAILS }}
           SAVE_LOCAL_HTML: "False"
-          INCLUDE_ZONES: "bommanahali"
+          EXCLUDE_ZONES: "bommanahali"
         run: |
           SLOT_DATE="${{ github.event.inputs.target_date || github.event.client_payload.target_date || 'today' }}"
           if [ -z "$SLOT_DATE" ]; then SLOT_DATE="today"; fi

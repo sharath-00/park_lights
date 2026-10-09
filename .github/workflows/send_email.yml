@@ -8,7 +8,7 @@ on:
         required: false
         default: ''
   repository_dispatch:
-    types: [audit_trigger_bommanahalli, report_trigger_bommanahalli, send_email_bommanahalli]
+    types: [audit_trigger_bommanahalli, report_trigger_bommanahalli, send_email_bommanahalli, send_email_all]
 
 permissions:
   contents: write

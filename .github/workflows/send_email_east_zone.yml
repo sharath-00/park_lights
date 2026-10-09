@@ -8,7 +8,7 @@ on:
         required: false
         default: ''
   repository_dispatch:
-    types: [audit_trigger_east_zone, report_trigger_east_zone, send_email_east_zone]
+    types: [audit_trigger_east_zone, report_trigger_east_zone, send_email_east_zone, send_email_all]
 
 permissions:
   contents: write

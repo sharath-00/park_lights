@@ -24,3 +24,10 @@ Desktop.ini
 
 # Logs
 logs/
+
+# Credentials & Service accounts
+service*.json
+*service_account*.json
+**/service*.json
+**/data/audit_history.json
+*.xlsx

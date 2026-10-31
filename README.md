@@ -26,6 +26,14 @@ d:\Schnell\BBMP_Park_Lights\
 ├── email_reporter.py          # HTML Dashboard generator & SMTP dispatcher
 ├── test_audit.py              # Instant audit test runner (run audit right now)
 ├── main.py                    # Background scheduler daemon for 7:30 AM & 9:30 AM
+├── five_b_innovation/         # 5B Innovation Park Lights Monitoring & Audit Subsystem
+│   ├── service.json           # Google Service Account Credentials
+│   ├── google_sheets_client.py# Google Sheets API (gspread) parser
+│   ├── thingsboard_client.py  # 5B Customer ThingsBoard Telemetry Client
+│   ├── generate_excel_report.py# Multi-tab stylized Excel report generator
+│   ├── email_reporter.py      # Responsive 5B HTML Email Dashboard
+│   ├── main.py                # 5B pipeline entrypoint & CLI
+│   └── README.md              # 5B Innovation module documentation
 └── README.md
 ```
 

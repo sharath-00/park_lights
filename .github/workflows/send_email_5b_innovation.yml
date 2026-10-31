@@ -9,9 +9,7 @@ on:
         default: ''
   repository_dispatch:
     types: [audit_trigger_5b, report_trigger_5b, send_email_5b, send_email_all]
-  schedule:
-    # 07:15 AM IST (01:45 AM UTC) daily after the 07:00 AM checkpoint
-    - cron: '45 1 * * *'
+ 
 
 permissions:
   contents: write
@@ -72,3 +70,4 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add five_b_innovation/data/device_id_cache.json
           git diff --quiet && git diff --staged --quiet || (git commit -m "Update 5B device cache [skip ci]" && git push)
+
